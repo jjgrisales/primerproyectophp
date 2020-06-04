@@ -3,8 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Denuncias Web App Transporte</title>
-        
+        <title>Tareas Entorno wed 2</title>
         <style>
             html
             {
@@ -16,10 +15,8 @@
             }
             .seccion
             {
-                height: 100%;
-               
-                border: whitesmoke solid 0px;
-
+                height: 70%;
+                border: whitesmoke ;
             }
             .header
             {
@@ -29,63 +26,74 @@
             {
                 height:10%
             }
+             
         </style>
     </head>
-    <body background="img/accidente.jpg";>
-
+    <body background="imag/linux.jpg" >
         <div class="header">
-            <h1>Denuncias Web App</h1>
-            <p><h2> Aplicación web para el registro de denuncias del transporte publico en Colombia </h2></p>
-            <p><h2>Permite el control y la veduría pública</h2></p>
+            <h1>tareas Web App</h1>
+            <br>
+            <p><h1> Aplicacion para poder crear,eliminar,consultar y actualizar tareas ya realizadas.</h1></p>
+            <br>
+            <br>
+            <br>
+
         </div>
         <div class="seccion">
-            <h3>Registre aquí sus denuncias</h3>
-            <form action="crearDenuncia.php" method="POST">
-                <div class="item-form"><br>
-                    <label for="">Lugar:</label>
-                    <input type="text" name="input_lugar" id="" required> 
-                </div><br>
+            <h3>REGISTRAR TAREA</h3>
+            <form action="creartarea.php" method="POST">
                 <div class="item-form">
-                    <label for="">Fecha:</label>
+                    <label for=""><h5>NOMBRE DE LA TAREA:</h5></label>
+                    <input type="text" name="input_nombre" id="" required>
+                </div>
+                <div class="item-form">
+                    <label for=""><h5>FECHA DE LA TAREA:</h5></label>
                     <input type="date" name="input_fecha" id="" required>
-                </div><br>
+                </div>
                 <div class="item-form">
-                    <label for="">Hora:</label>
-                    <input type="number" name="input_hora" id="" required>
-                </div><br>
+                    <label for=""><h5>DESCRIPCION:</h5></label>
+                    <input type="text" name="input_descripcion" id="" required>
+                </div>
                 <div class="item-form">
-                    <label for="">Tipo de Vehículo:</label>
-                    <input type="text" name="input_tipo" id="" required>
-                </div><br>
+                    <label for=""><h5>PRIORIDADES:</h5></label>
+                    <select name="input_prioridades">
+                    <option> </option>    
+
+                   <option>alta</option>
+
+                  <option>media</option>
+
+                   <option>baja</option>
+
+        </select>
+                </div>
                 <div class="item-form">
-                    <label for="">Placa:</label>
-                    <input type="text" name="input_placa" id="" required>
-                </div><br>
+                    <label for=""><h5>RESPONSABLE DE LA TAREA:</h5></label>
+                    <input type="text" name="input_responsable" id="" required>
+                </div>
+                <br>
                 <div class="item-form">
-                    <label for="">Denuncia:</label>
-                    <input type="textarea" name="input_denuncia" id="" required>
-                </div><br>
-                <div class="item-form">
-                    <input type="submit"  value="registrar datos" >
-                </div>  <br>              
+                    <input type="submit">
+                </div> 
+                <br>               
             </form>
-            <table border ="5"> 
-                <tr >
+            <table border="1">
+                <tr>
                     <th>id</th>
-                    <th>Lugar</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Tipo</th>
-                    <th>Placa</th>
-                    <th>Denuncia</th>
-                    <th>Editar dato</th>
-                    <th>Eliminar dato</th>
+                    <th>nombre </th>
+                    <th>fecha</th>
+                    <th>descripcion</th>
+                    <th>prioridades</th>
+                    <th>responsable</th>
+                    <th>boton editar</th>
+                    <th>boton eliminar</th>
                 </tr>
+                <br>
                 <?php
                 $servername = "localhost";
                 $username = "root";
                 $password = "";
-                $dbname = "denuncias_bd";
+                $dbname = "tareas_bd";
                 
                 $conn = new mysqli($servername, $username, $password, $dbname);
                 if($conn->connect_error)
@@ -98,7 +106,8 @@
                     echo "conexión establecida entre php y mysql</br>";
                 }
                 //crear sentencia sql
-                $sql = "SELECT * from denuncias";
+                $sql = "SELECT * from tareas";
+                $sql = "SELECT * from tareas ORDER BY fecha DESC";
                 //lanzar la sentencia sql
                 $respuesta = $conn->query($sql);
                 while($row=$respuesta->fetch_array())
@@ -106,14 +115,13 @@
                 ?>
                 <tr>
                     <td> <?php echo $row['id_pk']; ?></td>
-                    <td> <?php echo $row['lugar']; ?></td>
+                    <td> <?php echo $row['nombre']; ?></td>
                     <td> <?php echo $row['fecha']; ?></td>
-                    <td> <?php echo $row['hora']; ?></td>
-                    <td> <?php echo $row['tipo']; ?></td>
-                    <td> <?php echo $row['placa']; ?></td>
-                    <td> <?php echo $row['denuncia']; ?></td>
-                    <td><a href="editarDenuncia.php?id_para_editar=<?php echo $row['id_pk']; ?>">Editar</a></td>
-                    <td><a href="eliminarDenuncia.php?id_para_borrar=<?php echo $row['id_pk']; ?>">eliminar</a></td>
+                    <td> <?php echo $row['descripcion']; ?></td>
+                    <td> <?php echo $row['prioridades']; ?></td>
+                    <td> <?php echo $row['responsable']; ?></td>
+                    <td><a href="vertareaParaEditar.php?id_para_editar=<?php echo $row['id_pk']; ?>">Editar</a></td>
+                    <td><a href="eliminartarea.php?id_para_borrar=<?php echo $row['id_pk']; ?>">Eliminar</a></td>
                 </tr>
                 <?php
                 }
@@ -123,8 +131,12 @@
             </table>
             
         </div>
+        <br>
+        
+        
         <div class="footer">
-           
+            Realizado por james grisales
         </div>
+        
     </body>
 </html>
